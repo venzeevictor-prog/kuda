@@ -34,7 +34,7 @@ app.use('',router)
 //app.use(cookieParser());
 
   function middleware (req, res, next) {
-     
+         //msg
     // Extract token from Authorization header or cookie
     const token =  req.headers.cookie.split('token=')[1]; 
      console.log(token)
