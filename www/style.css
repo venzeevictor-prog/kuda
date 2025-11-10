@@ -94,7 +94,8 @@
   
   button {
   
-    background-color: #d1d5db;
+    background-color: #40196D;
+    
     color: #fff;
     border: none;
     border-radius: 6px;
@@ -106,7 +107,7 @@
   }
   
   button.active {
-    background-color: #1f2937;
+    background-color: #40196D;
     cursor: pointer;
   }
   
@@ -115,12 +116,12 @@
   }
   
   button.active {
-    background-color: #111827;
+    background-color: #40196D;
     transform: scale(1.02);
   }
   
   button.active:hover {
-    background-color: #0f172a;
+    background-color: #451d74;
   }
   @media (max-width: 480px) {
     .container {
