@@ -20,7 +20,7 @@ import { console } from 'inspector';
 const pss = dotenv.configDotenv({ path: '', encoding: 'latin1', quiet: false, debug: true, override: false })
 
 const app = express();
-const PORT = 3000;
+const PORT = 3020;
 app.use(express.static(path.join(path.basename(''), 'www')));
 app.use(express.json());
 app.use(cors({
